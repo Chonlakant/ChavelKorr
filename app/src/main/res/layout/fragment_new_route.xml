@@ -68,7 +68,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:gravity="bottom"
-                        android:text="Route Details*" />
+                        android:text="Route Details" />
 
                     <View
                         android:layout_width="match_parent"
@@ -194,7 +194,7 @@
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
                             android:layout_marginTop="10dp"
-                            android:text="Route Descrition*" />
+                            android:text="Route Description" />
 
                         <EditText
                             android:id="@+id/dt_route_descrition"
