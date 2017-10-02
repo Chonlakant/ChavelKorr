@@ -11,9 +11,7 @@ import com.android.volley.toolbox.Volley;
 public class ChavelApplication extends Application{
 
     public static final String TAG = ChavelApplication.class.getSimpleName();
-
     private RequestQueue mRequestQueue;
-
     private static ChavelApplication mInstance;
 
     @Override

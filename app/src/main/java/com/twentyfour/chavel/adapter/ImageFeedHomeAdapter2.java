@@ -9,13 +9,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
+
 import com.twentyfour.chavel.R;
 import com.twentyfour.chavel.misc.RoundedCornersTransformation1;
 import com.twentyfour.chavel.model.ModelPins;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
 
 public class ImageFeedHomeAdapter2 extends RecyclerView.Adapter<ImageFeedHomeAdapter2.ViewHolder> {
 
@@ -79,7 +81,7 @@ public class ImageFeedHomeAdapter2 extends RecyclerView.Adapter<ImageFeedHomeAda
 
         Glide.with(ctx)
                 .load(a[position])
-                .apply(RequestOptions.bitmapTransform(new RoundedCornersTransformation1(ctx, sCorner, sMargin, sColor, sBorder)))
+                .apply(bitmapTransform(new RoundedCornersTransformation1(ctx, sCorner, sMargin, sColor, sBorder)))
                 .into(holder.img_cover);
 
 

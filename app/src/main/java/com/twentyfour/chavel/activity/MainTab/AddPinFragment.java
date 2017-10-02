@@ -1,11 +1,14 @@
 package com.twentyfour.chavel.activity.MainTab;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.location.Location;
+import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,6 +18,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,11 +26,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -52,6 +61,7 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 
+import gun0912.tedbottompicker.TedBottomPicker;
 import siclo.com.ezphotopicker.api.EZPhotoPick;
 import siclo.com.ezphotopicker.api.EZPhotoPickStorage;
 import siclo.com.ezphotopicker.api.models.EZPhotoPickConfig;
@@ -66,29 +76,28 @@ public class AddPinFragment extends Fragment implements
         ActivityCompat.OnRequestPermissionsResultCallback,
         CustomSupportMapFragment.OnMapFragmentReadyListener, LocationListener {
 
+    public static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
+    public static boolean mPermissionDenied = false;
+
     @Bind(R.id.toolbar)
     Toolbar toolbar;
 
-    ImageView btn_expand_toggle;
-    private ExpandableLayout expandableLayout0;
-    private ExpandableLayout expandableLayout1;
+    public EditText txtPinnameEdit;
+    public  ImageView btn_expand_toggle;
+    public  ExpandableLayout expandableLayout0;
 
-    ImageView img_next;
-    LinearLayout ls_map;
-    ImageView btnEditPinImage;
+    public  LinearLayout ls_map;
+    public  ImageView ls_next_2;
+    public  ImageView take_photo;
 
-    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
-    private boolean mPermissionDenied = false;
-
+    private  Location location;
     private SupportMapFragment mMapFragment;
     private GoogleMap mMap;
-    Location location;
     private LatLngBounds mInitialMapBounds;
 
-    ArrayList<GetMapData> listMap = new ArrayList<>();
-    EditText txtPinnameEdit;
+    private ArrayList<GetMapData> listMap = new ArrayList<>();
 
-    public static ViewRouteFragment newInstance(String message) {
+    public static ViewRouteFragment newInstance() {
         ViewRouteFragment fragment = new ViewRouteFragment();
         Bundle bundle = new Bundle();
         fragment.setArguments(bundle);
@@ -99,12 +108,6 @@ public class AddPinFragment extends Fragment implements
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // BusProvider.getBus().register(this);
-
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-
-        }
 
     }
 
@@ -113,18 +116,6 @@ public class AddPinFragment extends Fragment implements
         setHasOptionsMenu(true);
 
         toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
-        img_next = (ImageView) rootView.findViewById(R.id.img_next);
-        txtPinnameEdit = (EditText) rootView.findViewById(R.id.txtPinnameEdit);
-
-        expandableLayout0 = (ExpandableLayout) rootView.findViewById(R.id.expandable_layout_0);
-        expandableLayout1 = (ExpandableLayout) rootView.findViewById(R.id.expandable_layout_1);
-        btn_expand_toggle = (ImageView) rootView.findViewById(R.id.btn_expand_toggle);
-        ls_map = (LinearLayout) rootView.findViewById(R.id.ls_map);
-        btnEditPinImage = (ImageView) rootView.findViewById(R.id.btnEditPinImage);
-
-        mMapFragment = CustomSupportMapFragment.newInstance();
-        getChildFragmentManager().beginTransaction().replace(R.id.flMapContainer2, mMapFragment).commit();
-
         toolbar.setTitle("Add Pin");
         //  setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(getResources().getColor(R.color.textColorTitle));
@@ -133,10 +124,19 @@ public class AddPinFragment extends Fragment implements
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                getActivity().onBackPressed();
                 getFragmentManager().popBackStack();
             }
         });
+
+        txtPinnameEdit = (EditText) rootView.findViewById(R.id.txtPinnameEdit);
+        expandableLayout0 = (ExpandableLayout) rootView.findViewById(R.id.expandable_layout_0);
+        btn_expand_toggle = (ImageView) rootView.findViewById(R.id.btn_expand_toggle);
+        ls_map = (LinearLayout) rootView.findViewById(R.id.ls_map);
+        ls_next_2 = (ImageView) rootView.findViewById(R.id.ls_next_2);
+        take_photo = (ImageView) rootView.findViewById(R.id.take_photo);
+
+        mMapFragment = CustomSupportMapFragment.newInstance();
+        getChildFragmentManager().beginTransaction().replace(R.id.flMapContainer2, mMapFragment).commit();
 
         btn_expand_toggle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,7 +152,7 @@ public class AddPinFragment extends Fragment implements
             }
         });
 
-        img_next.setOnClickListener(new View.OnClickListener() {
+        ls_next_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -164,24 +164,85 @@ public class AddPinFragment extends Fragment implements
                     transaction.add(R.id.content, viewRouteFragment);
                     transaction.addToBackStack(null);
                     transaction.commit();
-
                 }
 
             }
         });
 
-        btnEditPinImage.setOnClickListener(new View.OnClickListener() {
+        setMultiShowButton();
+
+        mLocationListener.onLocationChanged(location);
+        return rootView;
+    }
+
+    public RequestManager mGlideRequestManager;
+    ImageView iv_image;
+    ArrayList<Uri> selectedUriList;
+    Uri selectedUri;
+    private ViewGroup mSelectedImagesContainer;
+
+    private void setMultiShowButton() {
+
+        take_photo.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-              //  showAlertDialogOne();
-                chooseCamera();
+            public void onClick(View view) {
+
+
+                TedBottomPicker bottomSheetDialogFragment = new TedBottomPicker.Builder(getActivity())
+                        .setOnMultiImageSelectedListener(new TedBottomPicker.OnMultiImageSelectedListener() {
+                            @Override
+                            public void onImagesSelected(ArrayList<Uri> uriList) {
+                                selectedUriList = uriList;
+                                showUriList(uriList);
+                            }
+                        })
+                        //.setPeekHeight(getResources().getDisplayMetrics().heightPixels/2)
+                        .setPeekHeight(1600)
+                        .showTitle(false)
+                        .setCompleteButtonText("Done")
+                        .setEmptySelectionText("No Select")
+                        .setSelectedUriList(selectedUriList)
+                        .create();
+
+                bottomSheetDialogFragment.show(getActivity().getSupportFragmentManager());
+
             }
         });
 
-        mLocationListener.onLocationChanged(location);
+    }
+
+    private void showUriList(ArrayList<Uri> uriList) {
+        // Remove all views before
+        // adding the new ones.
+        mSelectedImagesContainer.removeAllViews();
+
+        iv_image.setVisibility(View.GONE);
+        mSelectedImagesContainer.setVisibility(View.VISIBLE);
+
+        int wdpx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getResources().getDisplayMetrics());
+        int htpx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getResources().getDisplayMetrics());
 
 
-        return rootView;
+        for (Uri uri : uriList) {
+
+            View imageHolder = LayoutInflater.from(getActivity()).inflate(R.layout.item_pin_image, null);
+            ImageView thumbnail = (ImageView) imageHolder.findViewById(R.id.media_image);
+
+
+
+            Glide.with(this)
+                    .load(uri.toString())
+
+                    .bitmapTransform(new CenterCrop(context))
+                    .into(thumbnail);
+
+            mSelectedImagesContainer.addView(imageHolder);
+
+            thumbnail.setLayoutParams(new FrameLayout.LayoutParams(wdpx, htpx));
+
+
+        }
+
     }
 
     private void showAlertDialogOne() {
@@ -232,12 +293,11 @@ public class AddPinFragment extends Fragment implements
             return;
         }
 
-
         if (requestCode == EZPhotoPick.PHOTO_PICK_GALLERY_REQUEST_CODE &&
                 resultCode == RESULT_OK) {
             try {
                 Bitmap pickedPhoto = new EZPhotoPickStorage(getActivity()).loadLatestStoredPhotoBitmap();
-                btnEditPinImage.setImageBitmap(pickedPhoto);
+                take_photo.setImageBitmap(pickedPhoto);
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 pickedPhoto.compress(Bitmap.CompressFormat.PNG, 100, stream);
 
@@ -251,7 +311,7 @@ public class AddPinFragment extends Fragment implements
                 resultCode == RESULT_OK) {
             try {
                 Bitmap pickedCamera = new EZPhotoPickStorage(getActivity()).loadLatestStoredPhotoBitmap();
-                btnEditPinImage.setImageBitmap(pickedCamera);
+                take_photo.setImageBitmap(pickedCamera);
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 pickedCamera.compress(Bitmap.CompressFormat.PNG, 100, stream);
 
@@ -268,7 +328,6 @@ public class AddPinFragment extends Fragment implements
         @Override
         public void onLocationChanged(Location location) {
             if (location != null) {
-
                 Log.e("dddd", location.getLongitude() + "");
             } else {
                 Log.e("dddd", "dddddddddddd");
@@ -365,14 +424,14 @@ public class AddPinFragment extends Fragment implements
             mMap.setMyLocationEnabled(true);
 
             // zoom map to current location, if known
-//            LocationManager locationManager =
-//                    (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
-//            Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-//            if (location != null) {
-//                LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-//                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 11);
-//                mMap.animateCamera(cameraUpdate);
-//            }
+            LocationManager locationManager =
+                    (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
+            Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            if (location != null) {
+                LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 11);
+                mMap.animateCamera(cameraUpdate);
+            }
         }
     }
 
@@ -402,18 +461,8 @@ public class AddPinFragment extends Fragment implements
 
     @Override
     public void onLocationChanged(Location location) {
-
         Toast.makeText(getActivity(), location.getLatitude() + " : " + location.getLongitude(), Toast.LENGTH_SHORT).show();
-
     }
-
-    @Subscribe
-    public void getRouteStates(Events_Route_Name.Events_RoutNameFragmentMessage texts) {
-
-    }
-
-
-
 
     @Override
     public void onStart() {
@@ -427,8 +476,6 @@ public class AddPinFragment extends Fragment implements
         BusProvider.getInstance().unregister(this);
     }
 
-
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_fragment_add_pin, menu);
@@ -439,7 +486,6 @@ public class AddPinFragment extends Fragment implements
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_more:
-
                 return true;
         }
         return super.onOptionsItemSelected(item);

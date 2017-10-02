@@ -131,7 +131,7 @@ public class NewRouteFragment extends Fragment {
 
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-        View view = inflater.inflate(R.layout.fragment_new_route, null);
+        View view = inflater.inflate(R.layout.fragment_add_route, null);
 
         view = initView(view);
         initOnClicks();

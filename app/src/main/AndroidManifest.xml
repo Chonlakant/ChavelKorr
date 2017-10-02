@@ -1,23 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.twentyfour.chavel">
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.GET_TASKS" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA" />
-
-
-    <uses-feature android:name="android.hardware.camera" />
-
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-sdk android:minSdkVersion="16" tools:overrideLibrary="gun0912.tedbottompicker"/>
 
     <application
         android:name=".ChavelApplication"
@@ -32,13 +18,15 @@
             android:value="@string/google_maps_key" />
 
         <activity android:name=".fragment.NewRouteTabFragment">
+
+        </activity>
+
+        <activity android:name=".MainTabActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".MainTabActivity"></activity>
 
         <!-- Login Register Zone -->
         <activity android:name=".activity.LoginRegister.RegisterActivity" />
@@ -69,19 +57,14 @@
 
         <activity android:name=".activity.SettingSystemActivity" />
 
-        <activity android:name=".activity.MainTab.CrossProvinceActivity" />
-        <activity android:name=".activity.MainTab.LocationAddActivity" />
+        <!--<activity android:name=".activity.MainTab.CrossProvinceActivity" />-->
+        <!--<activity android:name=".activity.MainTab.LocationAddActivity" />-->
 
         <activity android:name=".activity.MainTab.RouteHistoryActivity" />
         <activity android:name=".activity.MainTab.OverViewPinsActivity" />
 
       <activity android:name=".activity.MainTab.CommentActivity"/>
 
-
-        <activity
-            android:name=".service.BaseActivity"
-            android:label="@string/title_activity_base"
-            android:theme="@style/AppTheme"></activity>
 
         <activity android:name=".fragment.TabMyRouteFragment"/>
         <activity android:name=".fragment.SearchFragment"/>

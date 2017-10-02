@@ -24,7 +24,7 @@ public class NewRouteTabFragment extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_new_route_tab);
+        setContentView(R.layout.fragment_add_router);
 
 
         tabLayout2 = (TabLayout) findViewById(R.id.tab_layout);
