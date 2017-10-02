@@ -7,18 +7,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.twentyfour.chavel.R;
-import com.twentyfour.chavel.activity.MainTab.DraftFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class NewRouteTapFragment extends AppCompatActivity {
+public class NewRouteTabFragment extends AppCompatActivity {
 
     String[] icons = {"New Route", "From Draft"};
 
@@ -28,7 +24,7 @@ public class NewRouteTapFragment extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_pins2);
+        setContentView(R.layout.fragment_new_route_tab);
 
 
         tabLayout2 = (TabLayout) findViewById(R.id.tab_layout);

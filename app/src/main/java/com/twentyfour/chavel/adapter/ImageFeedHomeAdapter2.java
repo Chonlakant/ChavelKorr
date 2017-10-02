@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.twentyfour.chavel.R;
-import com.twentyfour.chavel.RoundedCornersTransformation1;
+import com.twentyfour.chavel.misc.RoundedCornersTransformation1;
 import com.twentyfour.chavel.model.ModelPins;
 
 import java.util.ArrayList;

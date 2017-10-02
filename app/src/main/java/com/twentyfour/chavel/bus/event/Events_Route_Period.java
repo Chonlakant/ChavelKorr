@@ -1,4 +1,4 @@
-package com.twentyfour.chavel.Event;
+package com.twentyfour.chavel.bus.event;
 
 public class Events_Route_Period {
 

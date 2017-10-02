@@ -20,7 +20,6 @@ import com.twentyfour.chavel.activity.MainTab.BudgetFragment;
 import com.twentyfour.chavel.activity.MainTab.LocationFragment;
 import com.twentyfour.chavel.activity.MainTab.PeriodTimeFragment;
 import com.twentyfour.chavel.activity.MainTab.RouteDescriptionFragment;
-import com.twentyfour.chavel.activity.MainTab.RouteFragment;
 import com.twentyfour.chavel.activity.MainTab.RouteHistoryActivity;
 import com.twentyfour.chavel.activity.MainTab.RouteNameFragment;
 import com.twentyfour.chavel.activity.MainTab.SelectActivityFragment;

@@ -1,4 +1,4 @@
-package com.twentyfour.chavel;
+package com.twentyfour.chavel.misc;
 
 import android.content.Context;
 import android.graphics.Bitmap;

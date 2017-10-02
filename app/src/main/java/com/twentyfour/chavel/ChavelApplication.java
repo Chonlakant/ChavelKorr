@@ -8,13 +8,13 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
 
-public class AppController extends Application{
+public class ChavelApplication extends Application{
 
-    public static final String TAG = AppController.class.getSimpleName();
+    public static final String TAG = ChavelApplication.class.getSimpleName();
 
     private RequestQueue mRequestQueue;
 
-    private static AppController mInstance;
+    private static ChavelApplication mInstance;
 
     @Override
     public void onCreate() {
@@ -22,7 +22,7 @@ public class AppController extends Application{
         mInstance = this;
     }
 
-    public static synchronized AppController getInstance() {
+    public static synchronized ChavelApplication getInstance() {
         return mInstance;
     }
 

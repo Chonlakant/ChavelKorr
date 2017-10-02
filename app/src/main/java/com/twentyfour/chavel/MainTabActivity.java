@@ -8,21 +8,14 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.TabHost;
-import android.widget.Toast;
 
-import com.twentyfour.chavel.fragment.NewRouteTapFragment;
+import com.twentyfour.chavel.fragment.NewRouteTabFragment;
 import com.twentyfour.chavel.fragment.NotiFragment;
 import com.twentyfour.chavel.fragment.SearchFragment;
 import com.twentyfour.chavel.fragment.TabMyRouteFragment;
 import com.twentyfour.chavel.fragment.UserProfileFragment;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainTabActivity extends TabActivity {
 
@@ -79,7 +72,7 @@ public class MainTabActivity extends TabActivity {
         Drawable dr3 = ResourcesCompat.getDrawable(getResources(), R.drawable.home_tab3, null);
         spec.setIndicator("", dr3); // set the “ABOUT” as an indicator
         // Create an Intent to launch an Activity for the tab (to be reused)
-        intent = new Intent(this, NewRouteTapFragment.class);
+        intent = new Intent(this, NewRouteTabFragment.class);
         spec.setContent(intent);
         tabHost.addTab(spec);
 

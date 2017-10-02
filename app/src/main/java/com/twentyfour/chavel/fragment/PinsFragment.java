@@ -1,6 +1,5 @@
 package com.twentyfour.chavel.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,14 +12,11 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.twentyfour.chavel.BusProvider.BusProvider;
-import com.twentyfour.chavel.Event.Events_Desc;
-import com.twentyfour.chavel.Event.Events_State_Menu;
+import com.twentyfour.chavel.bus.BusProvider;
+import com.twentyfour.chavel.bus.event.Events_State_Menu;
 import com.twentyfour.chavel.R;
 import com.twentyfour.chavel.activity.MainTab.AddPinFragment;
 import com.twentyfour.chavel.activity.MainTab.EditPinFragment;
-import com.twentyfour.chavel.activity.MainTab.MySigleRouteFragment;
-import com.twentyfour.chavel.activity.MainTab.PinDetailsFragment;
 import com.twentyfour.chavel.adapter.PinsAdapter;
 import com.twentyfour.chavel.model.ModelPins;
 

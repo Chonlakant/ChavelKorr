@@ -1,4 +1,4 @@
-package com.twentyfour.chavel.uilt;
+package com.twentyfour.chavel.util;
 
 import java.util.ArrayList;
 
@@ -11,7 +11,6 @@ public class MapMarker {
     private double lng;
     private String description;
 
-
     // TODO, make async
     public static ArrayList<MapMarker> getMapMarkers() {
         ArrayList<MapMarker> list = new ArrayList<MapMarker>();
@@ -19,8 +18,6 @@ public class MapMarker {
 
         return list;
     }
-
-
 
     public MapMarker(int id, double lat, double lng, String description) {
         this.id = id;
@@ -60,6 +57,5 @@ public class MapMarker {
     public void setDescription(String description) {
         this.description = description;
     }
-
 
 }

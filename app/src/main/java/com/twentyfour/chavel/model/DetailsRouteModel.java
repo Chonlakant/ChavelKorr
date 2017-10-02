@@ -4,7 +4,7 @@ package com.twentyfour.chavel.model;
  * Created by Bas on 9/13/2017 AD.
  */
 
-public class DetailsRoute {
+public class DetailsRouteModel {
     String desc;
     String activity;
     String location;
@@ -13,11 +13,11 @@ public class DetailsRoute {
     String suggestion;
     String routeName;
 
-    public DetailsRoute(){
+    public DetailsRouteModel(){
 
     }
 
-    public DetailsRoute(String desc, String activity, String location, String travel, String period, String suggestion, String routeName) {
+    public DetailsRouteModel(String desc, String activity, String location, String travel, String period, String suggestion, String routeName) {
         this.desc = desc;
         this.activity = activity;
         this.location = location;

@@ -23,16 +23,16 @@ import android.widget.Toast;
 
 import com.kbeanie.multipicker.api.ImagePicker;
 import com.squareup.otto.Subscribe;
-import com.twentyfour.chavel.BusProvider.BusProvider;
-import com.twentyfour.chavel.Event.Events;
-import com.twentyfour.chavel.Event.Events_Desc;
-import com.twentyfour.chavel.Event.Events_Route_Activity;
-import com.twentyfour.chavel.Event.Events_Route_Details;
-import com.twentyfour.chavel.Event.Events_Route_Loction;
-import com.twentyfour.chavel.Event.Events_Route_Name;
-import com.twentyfour.chavel.Event.Events_Route_Period;
-import com.twentyfour.chavel.Event.Events_Route_Suggestion;
-import com.twentyfour.chavel.Event.Events_Route_Travel;
+import com.twentyfour.chavel.bus.BusProvider;
+import com.twentyfour.chavel.bus.event.Events;
+import com.twentyfour.chavel.bus.event.Events_Desc;
+import com.twentyfour.chavel.bus.event.Events_Route_Activity;
+import com.twentyfour.chavel.bus.event.Events_Route_Details;
+import com.twentyfour.chavel.bus.event.Events_Route_Loction;
+import com.twentyfour.chavel.bus.event.Events_Route_Name;
+import com.twentyfour.chavel.bus.event.Events_Route_Period;
+import com.twentyfour.chavel.bus.event.Events_Route_Suggestion;
+import com.twentyfour.chavel.bus.event.Events_Route_Travel;
 import com.twentyfour.chavel.R;
 import com.twentyfour.chavel.activity.MainTab.AddPinFragment;
 import com.twentyfour.chavel.activity.MainTab.BudgetFragment;
@@ -44,7 +44,7 @@ import com.twentyfour.chavel.activity.MainTab.PeriodTimeFragment;
 import com.twentyfour.chavel.activity.MainTab.RouteHistoryActivity;
 import com.twentyfour.chavel.activity.MainTab.SuggestionFragment;
 import com.twentyfour.chavel.activity.MainTab.SelectTravelMethodFragment;
-import com.twentyfour.chavel.model.DetailsRoute;
+import com.twentyfour.chavel.model.DetailsRouteModel;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
 
@@ -97,7 +97,7 @@ public class NewRouteFragment extends Fragment {
 
     boolean status = false;
 
-    DetailsRoute detailsRoute;
+    DetailsRouteModel detailsRouteModel;
 
 
     public static NewRouteFragment newInstance() {
@@ -132,6 +132,31 @@ public class NewRouteFragment extends Fragment {
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         View view = inflater.inflate(R.layout.fragment_new_route, null);
+
+        view = initView(view);
+        initOnClicks();
+
+        ArrayList<View> views = new ArrayList<>();
+       // ls_loction.setVisibility(View.GONE);
+
+        //views.add(dt_name);
+        views.add(dt_details);
+        views.add(dt_route_desc);
+        views.add(dt_location);
+        views.add(dt_activity);
+        views.add(et_travel_method);
+        views.add(dt_period);
+        views.add(ed_suggesstion);
+
+        for (int i = 0; i < views.size(); i++) {
+            views.get(i).setFocusable(false);
+            views.get(i).setClickable(true);
+        }
+
+        return view;
+    }
+
+    private View initView(View view) {
         ls_cover = (LinearLayout) view.findViewById(R.id.ls_cover);
         ls_next_2 = (ImageView) view.findViewById(R.id.ls_next_2);
         ls_loction = (LinearLayout) view.findViewById(R.id.ls_loction);
@@ -158,24 +183,10 @@ public class NewRouteFragment extends Fragment {
         dt_route_desc = (EditText) view.findViewById(R.id.dt_route_descrition);
         dt_name = (EditText) view.findViewById(R.id.dt_name);
         dt_details = (TextView) view.findViewById(R.id.dt_details);
+        return view;
+    }
 
-        ArrayList<View> views = new ArrayList<>();
-        ls_loction.setVisibility(View.GONE);
-
-        views.add(dt_details);
-        views.add(dt_name);
-        views.add(dt_route_desc);
-        views.add(dt_location);
-        views.add(dt_activity);
-        views.add(et_travel_method);
-        views.add(dt_period);
-        views.add(ed_suggesstion);
-
-        for (int i = 0; i < views.size(); i++) {
-            views.get(i).setFocusable(false);
-            views.get(i).setClickable(true);
-        }
-
+    private void initOnClicks() {
         txt_loction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -209,20 +220,13 @@ public class NewRouteFragment extends Fragment {
 
                     String routeName = dt_name.getText().toString();
 
-                    detailsRoute = new DetailsRoute();
-                    detailsRoute.setRouteName(routeName);
-                    detailsRoute.setDesc(desc);
-                    detailsRoute.setActivity(activity);
-                    detailsRoute.setLocation(locationText);
-                    detailsRoute.setSuggestion(suggestion);
-                    detailsRoute.setTravel(travel);
-
-//                    detailsRoute.setRouteName(routeName);
-//                    detailsRoute.setDesc(desc);
-//                    detailsRoute.setActivity(activity);
-//                    detailsRoute.setLocation(locationText);
-//                    detailsRoute.setSuggestion(suggestion);
-//                    detailsRoute.setTravel(travel);
+                    detailsRouteModel = new DetailsRouteModel();
+                    detailsRouteModel.setRouteName(routeName);
+                    detailsRouteModel.setDesc(desc);
+                    detailsRouteModel.setActivity(activity);
+                    detailsRouteModel.setLocation(locationText);
+                    detailsRouteModel.setSuggestion(suggestion);
+                    detailsRouteModel.setTravel(travel);
 
 //                    Events_Route_Name.Events_RoutNameFragmentMessage fragmentActivityMessageEvent =
 //                            new Events_Route_Name.Events_RoutNameFragmentMessage("ggggggggg");
@@ -387,7 +391,7 @@ public class NewRouteFragment extends Fragment {
                     Toast.makeText(getActivity(), "Route name", Toast.LENGTH_SHORT).show();
                 } else {
 
-                    Events_Route_Details.Events_RoutDetails fragmentActivityMessageEvent = new Events_Route_Details.Events_RoutDetails(detailsRoute);
+                    Events_Route_Details.Events_RoutDetails fragmentActivityMessageEvent = new Events_Route_Details.Events_RoutDetails(detailsRouteModel);
                     BusProvider.getInstance().post(fragmentActivityMessageEvent);
 
                     AddPinFragment addPinActivity = new AddPinFragment();
@@ -400,8 +404,6 @@ public class NewRouteFragment extends Fragment {
 
             }
         });
-
-        return view;
     }
 
     private void showAlertDialogOne() {

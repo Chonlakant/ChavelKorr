@@ -1,4 +1,4 @@
-package com.twentyfour.chavel;
+package com.twentyfour.chavel.misc;
 
 /**
  * Created by vittal on 12/2/17.

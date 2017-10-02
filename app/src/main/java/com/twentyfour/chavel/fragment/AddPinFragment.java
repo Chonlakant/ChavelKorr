@@ -1,4 +1,4 @@
-package com.twentyfour.chavel.activity.MainTab;
+package com.twentyfour.chavel.fragment;
 
 import android.Manifest;
 import android.content.DialogInterface;
@@ -39,6 +39,7 @@ import com.squareup.otto.Subscribe;
 import com.twentyfour.chavel.bus.BusProvider;
 import com.twentyfour.chavel.bus.event.Events_Route_Name;
 import com.twentyfour.chavel.R;
+import com.twentyfour.chavel.activity.MainTab.ViewRouteFragment;
 import com.twentyfour.chavel.model.GetMapData;
 import com.twentyfour.chavel.util.CustomSupportMapFragment;
 import com.twentyfour.chavel.util.MapMarker;
@@ -51,7 +52,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import butterknife.Bind;
-
 import siclo.com.ezphotopicker.api.EZPhotoPick;
 import siclo.com.ezphotopicker.api.EZPhotoPickStorage;
 import siclo.com.ezphotopicker.api.models.EZPhotoPickConfig;
@@ -71,9 +71,8 @@ public class AddPinFragment extends Fragment implements
 
     ImageView btn_expand_toggle;
     private ExpandableLayout expandableLayout0;
-    private ExpandableLayout expandableLayout1;
 
-    ImageView img_next;
+    LinearLayout img_next;
     LinearLayout ls_map;
     ImageView btnEditPinImage;
 
@@ -99,12 +98,6 @@ public class AddPinFragment extends Fragment implements
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // BusProvider.getBus().register(this);
-
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-
-        }
 
     }
 
@@ -117,7 +110,6 @@ public class AddPinFragment extends Fragment implements
         txtPinnameEdit = (EditText) rootView.findViewById(R.id.txtPinnameEdit);
 
         expandableLayout0 = (ExpandableLayout) rootView.findViewById(R.id.expandable_layout_0);
-        expandableLayout1 = (ExpandableLayout) rootView.findViewById(R.id.expandable_layout_1);
         btn_expand_toggle = (ImageView) rootView.findViewById(R.id.btn_expand_toggle);
         ls_map = (LinearLayout) rootView.findViewById(R.id.ls_map);
         btnEditPinImage = (ImageView) rootView.findViewById(R.id.btnEditPinImage);

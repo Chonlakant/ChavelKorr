@@ -39,8 +39,8 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.twentyfour.chavel.AppController;
-import com.twentyfour.chavel.Driver;
+import com.twentyfour.chavel.ChavelApplication;
+import com.twentyfour.chavel.misc.Driver;
 import com.twentyfour.chavel.R;
 
 import org.json.JSONArray;
@@ -335,7 +335,7 @@ public class GoogleMapsPinsFragment extends Fragment implements
 
 
         //add request to queue
-        AppController.getInstance().addToRequestQueue(stringRequest);
+        ChavelApplication.getInstance().addToRequestQueue(stringRequest);
 
     }
 

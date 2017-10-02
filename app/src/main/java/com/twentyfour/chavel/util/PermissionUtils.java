@@ -1,4 +1,4 @@
-package com.twentyfour.chavel.uilt;
+package com.twentyfour.chavel.util;
 
 import android.Manifest;
 import android.app.AlertDialog;

@@ -9,9 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import com.twentyfour.chavel.BusProvider.BusProvider;
-import com.twentyfour.chavel.Event.Events;
-import com.twentyfour.chavel.Event.Events_Desc;
+import com.twentyfour.chavel.bus.BusProvider;
+import com.twentyfour.chavel.bus.event.Events_Desc;
 import com.twentyfour.chavel.R;
 
 

@@ -5,16 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -29,51 +22,33 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
-import com.twentyfour.chavel.BusProvider.BusProvider;
-import com.twentyfour.chavel.Event.Events;
-import com.twentyfour.chavel.Event.Events_Desc;
-import com.twentyfour.chavel.Event.Events_Route_Activity;
-import com.twentyfour.chavel.Event.Events_Route_Details;
-import com.twentyfour.chavel.Event.Events_Route_Loction;
-import com.twentyfour.chavel.Event.Events_Route_Name;
-import com.twentyfour.chavel.Event.Events_Route_Period;
-import com.twentyfour.chavel.Event.Events_Route_Suggestion;
-import com.twentyfour.chavel.Event.Events_Route_Travel;
-import com.twentyfour.chavel.Event.Events_State_Menu;
+import com.twentyfour.chavel.bus.BusProvider;
+import com.twentyfour.chavel.bus.event.Events;
+import com.twentyfour.chavel.bus.event.Events_Route_Details;
 import com.twentyfour.chavel.R;
-import com.twentyfour.chavel.activity.LoginRegister.ProfileFragment;
-import com.twentyfour.chavel.activity.SelectOverViewPinsActivity;
 import com.twentyfour.chavel.adapter.ExpandableListAdapter;
-import com.twentyfour.chavel.api.Apis;
 import com.twentyfour.chavel.fragment.GetMapFragment;
-import com.twentyfour.chavel.fragment.OverviewFragment;
 import com.twentyfour.chavel.fragment.OverviewFragmentEmty;
 import com.twentyfour.chavel.fragment.PinsFragment;
-import com.twentyfour.chavel.model.HomeFeed;
-import com.twentyfour.chavel.service.ServiceApi;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
-
-public class RouteFragment extends Fragment {
+public class ViewRouteFragment extends Fragment {
 
     private ExpandableLayout expandableLayout0;
     public static final String KEY_MESSAGE = "message";
 
     Toolbar toolbar;
-    Button btn_locaion_map;
+    Button btn_location_map;
 
     LinearLayout fragment_map;
     LinearLayout fragment_container3;
     LinearLayout ls_save_lin;
-    LinearLayout ls_locaion_map;
+    LinearLayout ls_location_map;
     LinearLayout ls_feed;
 
     EditText dt_period;
@@ -91,32 +66,23 @@ public class RouteFragment extends Fragment {
     private TextView txt_counrty;
     private TextView txt_city;
 
-
     Button ls_save;
-
-
     ImageView img_click;
-    boolean check1 = false;
-
-
-    ExpandableListAdapter expandableListAdapter;
-    ArrayList<HomeFeed> list = new ArrayList<>();
-    List<String> listString = new ArrayList<>();
 
     List<ExpandableListAdapter.Item> data = new ArrayList<>();
 
     LinearLayout ls_1;
     LinearLayout ls_2;
-    View view_1;
-    View view_2;
-    View view_border1;
-    View view_border2;
+//    View view_1;
+//    View view_2;
+//    View view_border1;
+//    View view_border2;
 
     String key1;
     String key2;
 
-    public static RouteFragment newInstance(String message) {
-        RouteFragment fragment = new RouteFragment();
+    public static ViewRouteFragment newInstance(String message) {
+        ViewRouteFragment fragment = new ViewRouteFragment();
         Bundle bundle = new Bundle();
         bundle.putString(KEY_MESSAGE, message);
         fragment.setArguments(bundle);
@@ -142,7 +108,7 @@ public class RouteFragment extends Fragment {
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_route, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_view_route, container, false);
 
         dialogLoading = new Dialog(getActivity(), R.style.FullHeightDialog);
         dialogLoading.setContentView(R.layout.dialog_loading_f);
@@ -166,19 +132,19 @@ public class RouteFragment extends Fragment {
         ls_1 = (LinearLayout) rootView.findViewById(R.id.ls_1);
         ls_2 = (LinearLayout) rootView.findViewById(R.id.ls_2);
 
-        view_1 = (View) rootView.findViewById(R.id.view_1);
-        view_2 = (View) rootView.findViewById(R.id.view_2);
-
-        view_border1 = (View) rootView.findViewById(R.id.view_border1);
-        view_border2 = (View) rootView.findViewById(R.id.view_border2);
+//        view_1 = (View) rootView.findViewById(R.id.view_1);
+//        view_2 = (View) rootView.findViewById(R.id.view_2);
+//
+//        view_border1 = (View) rootView.findViewById(R.id.view_border1);
+//        view_border2 = (View) rootView.findViewById(R.id.view_border2);
 
         toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
 
 
         ls_feed = (LinearLayout) rootView.findViewById(R.id.ls_feed);
-        btn_locaion_map = (Button) rootView.findViewById(R.id.btn_locaion_map);
+        btn_location_map = (Button) rootView.findViewById(R.id.btn_locaion_map);
         ls_save_lin = (LinearLayout) rootView.findViewById(R.id.ls_save_lin);
-        ls_locaion_map = (LinearLayout) rootView.findViewById(R.id.ls_locaion_map);
+        ls_location_map = (LinearLayout) rootView.findViewById(R.id.ls_locaion_map);
         toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
         fragment_map = (LinearLayout) rootView.findViewById(R.id.fragment_map);
         fragment_container3 = (LinearLayout) rootView.findViewById(R.id.fragment_container3);
@@ -218,7 +184,7 @@ public class RouteFragment extends Fragment {
         expandableLayout0 = (ExpandableLayout) rootView.findViewById(R.id.expandable_layout_0);
 
 
-        btn_locaion_map.setOnClickListener(new View.OnClickListener() {
+        btn_location_map.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -231,9 +197,10 @@ public class RouteFragment extends Fragment {
             }
         });
 
-        ls_locaion_map.setOnClickListener(new View.OnClickListener() {
+        ls_location_map.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 AddPinFragment addPinActivity = new AddPinFragment();
                 android.support.v4.app.FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.content_2, addPinActivity);
@@ -296,14 +263,13 @@ public class RouteFragment extends Fragment {
 
                 Toast.makeText(getActivity(), "Save", Toast.LENGTH_SHORT).show();
 
-
             }
         });
 
-        view_border1.setVisibility(View.VISIBLE);
-        view_border2.setVisibility(View.GONE);
-        view_1.setVisibility(View.GONE);
-        view_2.setVisibility(View.VISIBLE);
+//        view_border1.setVisibility(View.VISIBLE);
+//        view_border2.setVisibility(View.GONE);
+//        view_1.setVisibility(View.GONE);
+//        view_2.setVisibility(View.VISIBLE);
         PinsFragment twoFragment = new PinsFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.layout_fragment_container, twoFragment);
@@ -322,10 +288,10 @@ public class RouteFragment extends Fragment {
                 transaction.replace(R.id.layout_fragment_container, twoFragment);
                 transaction.commit();
 
-                view_1.setVisibility(View.VISIBLE);
-                view_2.setVisibility(View.GONE);
-                view_border2.setVisibility(View.VISIBLE);
-                view_border1.setVisibility(View.GONE);
+//                view_1.setVisibility(View.VISIBLE);
+//                view_2.setVisibility(View.GONE);
+//                view_border2.setVisibility(View.VISIBLE);
+//                view_border1.setVisibility(View.GONE);
 
             }
         });
@@ -335,15 +301,14 @@ public class RouteFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                view_border1.setVisibility(View.VISIBLE);
-                view_border2.setVisibility(View.GONE);
-                view_1.setVisibility(View.GONE);
-                view_2.setVisibility(View.VISIBLE);
+//                view_border1.setVisibility(View.VISIBLE);
+//                view_border2.setVisibility(View.GONE);
+//                view_1.setVisibility(View.GONE);
+//                view_2.setVisibility(View.VISIBLE);
                 PinsFragment twoFragment = new PinsFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.layout_fragment_container, twoFragment);
                 transaction.commit();
-
 
             }
         });
@@ -353,7 +318,12 @@ public class RouteFragment extends Fragment {
 
 
     @Subscribe
-    public void getMessage(Events.ActivityFragmentMessage activityFragmentMessage) {
+    public void getMessage(Events.ActivityFragmentMessage message) {
+
+    }
+
+    @Subscribe
+    public void getRouteState(Events_Route_Details.Events_RoutDetails texts) {
 
     }
 
@@ -382,12 +352,7 @@ public class RouteFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    @Subscribe
-    public void getRoteState(Events_Route_Details.Events_RoutDetails texts) {
-        Log.e("getRouteName", texts.getMessage().getRouteName());
-//        Events_Route_Details.Events_RoutDetails fragmentActivityMessageEvent = new Events_Route_Details.Events_RoutDetails(texts);
-//        BusProvider.getBus().post(fragmentActivityMessageEvent);
-    }
+
 
 
 }

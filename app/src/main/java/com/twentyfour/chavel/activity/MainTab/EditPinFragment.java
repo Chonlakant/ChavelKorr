@@ -30,9 +30,9 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.twentyfour.chavel.R;
 import com.twentyfour.chavel.model.GetMapData;
-import com.twentyfour.chavel.uilt.CustomSupportMapFragment;
-import com.twentyfour.chavel.uilt.MapMarker;
-import com.twentyfour.chavel.uilt.PermissionUtils;
+import com.twentyfour.chavel.util.CustomSupportMapFragment;
+import com.twentyfour.chavel.util.MapMarker;
+import com.twentyfour.chavel.util.PermissionUtils;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
 

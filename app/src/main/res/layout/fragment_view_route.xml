@@ -196,8 +196,9 @@
                                         android:orientation="horizontal">
 
                                         <LinearLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:gravity="top|right"
                                             android:orientation="horizontal">
 
                                             <ImageView
@@ -213,7 +214,7 @@
                                                 android:layout_gravity="center"
                                                 android:layout_marginLeft="5dp"
                                                 android:gravity="center"
-                                                android:text="24" />
+                                                android:text="0" />
 
                                             <ImageView
                                                 android:layout_width="20dp"
@@ -228,7 +229,7 @@
                                                 android:layout_gravity="center"
                                                 android:layout_marginLeft="5dp"
                                                 android:gravity="center"
-                                                android:text="24" />
+                                                android:text="0" />
 
                                             <ImageView
                                                 android:layout_width="20dp"
@@ -243,8 +244,7 @@
                                                 android:layout_gravity="center"
                                                 android:layout_marginLeft="5dp"
                                                 android:gravity="center"
-                                                android:text="24" />
-
+                                                android:text="0" />
 
                                         </LinearLayout>
 
@@ -269,10 +269,11 @@
                                     android:orientation="horizontal">
 
                                     <View
-                                        android:layout_width="250dp"
+                                        android:layout_width="0dp"
                                         android:layout_height="1dp"
                                         android:layout_marginRight="0dp"
                                         android:layout_marginTop="10dp"
+                                        android:layout_weight="1"
                                         android:background="#848889" />
 
                                     <ImageView
@@ -317,18 +318,18 @@
 
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="60dp"
+                                android:layout_height="wrap_content"
                                 android:orientation="horizontal">
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
+                                    android:layout_height="wrap_content"
                                     android:layout_weight="1">
 
                                     <LinearLayout
                                         android:id="@+id/ls_1"
                                         android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
+                                        android:layout_height="wrap_content"
                                         android:orientation="vertical">
 
                                         <TextView
@@ -338,36 +339,19 @@
                                             android:gravity="center"
                                             android:text="OVERVIEW" />
 
-
-
-                                        <View
-                                            android:id="@+id/view_1"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="3dp"
-                                            android:layout_marginTop="5dp"
-
-                                            android:background="#ff10a9e3" />
-
-                                        <View
-                                            android:id="@+id/view_border1"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="3dp"
-                                            android:layout_marginTop="5dp"
-                                            android:background="#a7a7aa" />
-
                                     </LinearLayout>
 
                                 </LinearLayout>
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
+                                    android:layout_height="wrap_content"
                                     android:layout_weight="1">
 
                                     <LinearLayout
                                         android:id="@+id/ls_2"
                                         android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
+                                        android:layout_height="wrap_content"
                                         android:orientation="vertical">
 
                                         <TextView
@@ -377,7 +361,6 @@
                                             android:gravity="center"
                                             android:text="PINS" />
 
-
                                         <View
                                             android:id="@+id/view_2"
                                             android:layout_width="match_parent"
@@ -386,18 +369,9 @@
                                             android:background="#ff10a9e3"
                                             android:visibility="gone" />
 
-                                        <View
-                                            android:id="@+id/view_border2"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="3dp"
-                                            android:layout_marginTop="5dp"
-                                            android:layout_marginRight="5dp"
-                                            android:background="#a7a7aa" />
-
                                     </LinearLayout>
 
                                 </LinearLayout>
-
 
                             </LinearLayout>
 

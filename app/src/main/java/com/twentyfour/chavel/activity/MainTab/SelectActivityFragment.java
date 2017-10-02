@@ -3,24 +3,15 @@ package com.twentyfour.chavel.activity.MainTab;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import com.twentyfour.chavel.BusProvider.BusProvider;
-import com.twentyfour.chavel.Event.Events_Route_Activity;
-import com.twentyfour.chavel.Event.Events_Route_Travel;
+import com.twentyfour.chavel.bus.BusProvider;
+import com.twentyfour.chavel.bus.event.Events_Route_Activity;
 import com.twentyfour.chavel.R;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
-
 
 public class SelectActivityFragment extends Fragment {
 

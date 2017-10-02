@@ -10,13 +10,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -43,9 +39,6 @@ import siclo.com.ezphotopicker.api.EZPhotoPickStorage;
 import siclo.com.ezphotopicker.api.models.EZPhotoPickConfig;
 import siclo.com.ezphotopicker.api.models.PhotoSource;
 
-import static android.app.Activity.RESULT_OK;
-
-
 public class AddPinActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, View.OnClickListener, GoogleMap.OnMarkerDragListener, GoogleMap.OnMapLongClickListener{
 
     @Bind(R.id.toolbar)
@@ -68,7 +61,7 @@ public class AddPinActivity extends FragmentActivity implements OnMapReadyCallba
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_pin_activity);
+        setContentView(R.layout.fragment_add_pin);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         img_next = (ImageView) findViewById(R.id.img_next);

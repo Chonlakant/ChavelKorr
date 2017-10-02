@@ -3,20 +3,16 @@ package com.twentyfour.chavel.activity.MainTab;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import com.twentyfour.chavel.BusProvider.BusProvider;
-import com.twentyfour.chavel.Event.Events_Desc;
-import com.twentyfour.chavel.Event.Events_Route_Loction;
+import com.twentyfour.chavel.bus.BusProvider;
+import com.twentyfour.chavel.bus.event.Events_Route_Loction;
 import com.twentyfour.chavel.R;
 import com.twentyfour.chavel.model.Location;
 
